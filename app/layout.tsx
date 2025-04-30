@@ -4,6 +4,7 @@ import { fontSans } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
 import { Analytics } from "@vercel/analytics/react"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import { ThemeProvider } from "@/components/theme-provider"
 
 import "@/styles/globals.css"
@@ -32,19 +33,21 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <>
       <html lang="en" suppressHydrationWarning>
         <body
-          className={cn(
-            "min-h-screen bg-background font-sans antialiased",
-            fontSans.variable
-          )}
-        >
-          <Analytics /> {/* 👈 Add here, just inside <body> */}
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <div className="relative flex min-h-screen flex-col">
-              {children}
-            </div>
-            <TailwindIndicator />
-          </ThemeProvider>
-        </body>
+  className={cn(
+    "min-h-screen bg-background font-sans antialiased",
+    fontSans.variable
+  )}
+>
+  <Analytics />      {/* Existing analytics tracking */}
+  <SpeedInsights />  {/* Now adding performance tracking */}
+
+  <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+    <div className="relative flex min-h-screen flex-col">
+      {children}
+    </div>
+    <TailwindIndicator />
+  </ThemeProvider>
+</body>
       </html>
     </>
   )
